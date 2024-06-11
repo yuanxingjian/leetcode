@@ -1,0 +1,13 @@
+class Solution {
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if(root==null){
+            return false;
+        }
+        //当结点为叶子结点时，检查是否满足题设
+        if(root.left==null&&root.right==null){
+            return root.val==targetSum;
+        }
+        //递归遍历左右子树
+        return hasPathSum(root.left,targetSum-root.val)||hasPathSum(root.right,targetSum-root.val);
+    }
+}

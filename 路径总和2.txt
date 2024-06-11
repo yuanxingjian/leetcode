@@ -1,0 +1,27 @@
+class Solution {
+    List<List<Integer>> ret=new ArrayList<>();
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        if(root==null){
+            return ret;
+        }
+        List<Integer> list =new ArrayList<>();
+        dfs(root,targetSum,list);
+        return ret;
+    }
+
+    private void dfs(TreeNode root, int targetSum,List<Integer> list) {
+        list.add(root.val);
+        if(root.left==null&&root.right==null&&root.val==targetSum){//满足题设
+            ret.add(new ArrayList<>(list));//回溯，不能直接return，后续需要恢复现场，即list.remove(list.size()-1);
+        }
+        if(root.left!=null){
+            dfs(root.left,targetSum-root.val,list);
+        }
+        if(root.right!=null){
+            dfs(root.right,targetSum-root.val,list);
+        }
+        //回溯，恢复现场(形参targetSum不需要恢复，因为每次递归的形参是独立的，回溯后自动恢复为上一次递归的形参)
+        list.remove(list.size()-1);
+
+    }
+}
