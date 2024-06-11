@@ -1,0 +1,38 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+class Solution {
+    List<List<Integer>> list = new ArrayList<>();
+
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        boolean[] visited=new boolean[candidates.length];
+        //将数组排序
+        Arrays.sort(candidates);
+        dfs(0, candidates, arrayList, target,visited);
+        return list;
+    }
+
+    //组合,target和candidates[]均大于0
+    private void dfs(int start, int[] candidates, ArrayList<Integer> arrayList, int target,boolean[] visited) {
+        if (target <= 0) {
+            if(target==0){
+                ArrayList<Integer> temp = new ArrayList<>(arrayList);
+                list.add(temp);
+            }
+            return;
+        }
+        for (int i = start; i < candidates.length; i++) {
+            if(i>0&&candidates[i-1]==candidates[i]&&visited[i-1]==false){//排除重复
+                continue;
+            }
+            arrayList.add(candidates[i]);
+            visited[i]=true;
+            dfs(i+1, candidates, arrayList, target - candidates[i],visited);//注意第一个形参,如果可以重复选取则为i，如不能重复选取则为i+1
+            visited[i]=false;
+            arrayList.remove(arrayList.size() - 1);
+        }
+    }
+
+}
